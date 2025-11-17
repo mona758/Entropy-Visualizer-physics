@@ -1,0 +1,113 @@
+
+<!doctype html>
+<html lang="ar">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Entropy Visualizer</title>
+  <link rel="stylesheet" href="style.css">
+
+  <!-- libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.6.0/lib/p5.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-2.26.1.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div>
+        <h1>Visualizer — الديناميكا الحرارية و الإنتروبي</h1>
+        <p>محاكاة تفاعلية: جزيئات، مقياس الإنتروبي،  وخط زمني تاريخي</p>
+      </div>
+      <div style="margin-left:auto; text-align:right">
+        <div class="badge"> 2/2</div>
+      </div>
+    </header>
+
+    <!-- اللوحة اليسرى: محاكاة الجزيئات -->
+    <section class="panel">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <strong>محاكاة الجزيئات (Entropy Demo)</strong>
+        <div style="color:var(--muted); font-size:13px">تقديري للـ S (نسبة)</div>
+      </div>
+
+      <div class="canvas-wrap">
+        <!-- هنا يحتضن p5 -->
+        <div id="p5-holder"></div>
+
+        <!-- شريط معلومات يطفو فوق الكانفس -->
+        <div style="position:absolute; right:12px; top:12px; background:rgba(0,0,0,0.35); padding:8px; border-radius:8px; color:#fff; font-size:13px;">
+          <div>Temp: <span id="temp-val">300</span> K</div>
+          <div>Entropy (relative): <span id="entropy-val">0.00</span></div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <div class="control">
+          <label>درجة الحرارة (Temp)</label>
+          <input id="temp" type="range" min="100" max="1500" value="300" />
+        </div>
+        <div class="control">
+          <label>عدد الجسيمات</label>
+          <input id="npart" type="range" min="50" max="800" value="220" />
+        </div>
+        <div class="control">
+          <label>الاضطراب (Random)</label>
+          <input id="noise" type="range" min="0" max="1" step="0.01" value="0.18" />
+        </div>
+      </div>
+    </section>
+
+    <!-- الجانب الأيمن: مخطط T-S وبيانات -->
+    <aside class="side">
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <strong>مخطط T – S (توضيحي)</strong>
+            <div style="font-size:12px;color:var(--muted)">تحديث لحظي بتأثير درجة الحرارة</div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-weight:700; color:var(--accent)">Project</div>
+            <div style="font-size:12px;color:var(--muted)">Thermo Visualizer</div>
+          </div>
+        </div>
+        <div id="plot"></div>
+        <div class="stats" style="margin-top:8px;">
+          <div>ΔT: <span id="deltat">0</span> K</div>
+          <div>Estimated η (Carnot): <span id="eta">0%</span></div>
+        </div>
+      </div>
+
+      <div class="card" style="flex:0 0 auto;">
+        <strong>تفاصيل مختصرة</strong>
+        <p style="color:var(--muted); font-size:13px; margin-top:8px">
+          استخدمي منزلق <b>Temp</b> لرفع حرارة النظام — ستلاحظين زيادة الطاقة الحركية، ارتفاع الإنتروبي المرئي وانتقال اللون في المخطط.
+        </p>
+      </div>
+    </aside>
+
+    
+    <!-- timeline -->
+    <div class="timeline" id="timeline">
+      <!-- سيتم ملؤها برمجياً -->
+    </div>
+
+
+    <footer>
+      <div>Layan - Rahaf - Najla - Hadeel - Atyaf</div>
+      <div style="display:flex; gap:8px">
+        <div class="badge">9th secondry school</div>
+        <div class="badge" id="selected-event">اختاري حدثًا من الخط الزمني</div>
+      </div>
+    </footer>
+  </div>
+  
+
+
+
+  <script src="script.js"></script>
+</body>
+</html>
